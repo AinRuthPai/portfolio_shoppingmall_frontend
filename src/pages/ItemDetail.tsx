@@ -63,9 +63,9 @@ export default function ItemDetail({ data }: any) {
       <MenuLine />
       <ItemDetailContent>
         <h4>상품 상세정보</h4>
-        {findItem.img.map((data: any, i: any) => (
-          <img src={data} alt=''></img>
-        ))}
+        {findItem.img.map((data: any, i: any) => {
+          return <img src={data} alt=''></img>;
+        })}
       </ItemDetailContent>
     </DetailContainer>
   );

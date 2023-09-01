@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addItem } from "../store";
-import Swal from "sweetalert2";
+// import { useDispatch } from "react-redux";
+// import { addItem } from "../store";
+// import Swal from "sweetalert2";
 
 export default function Item({ data }: any) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function linkToDetail() {
@@ -20,7 +20,7 @@ export default function Item({ data }: any) {
       <h5 onClick={linkToDetail}>{data.brand}</h5>
       <h5 onClick={linkToDetail}>{data.title}</h5>
       <p onClick={linkToDetail}>￦ {data.price}</p>
-      <span
+      {/* <span
         className='material-symbols-outlined'
         onClick={() => {
           dispatch(addItem({ id: data.id, name: data.title, price: data.price, count: 1 }));
@@ -31,19 +31,19 @@ export default function Item({ data }: any) {
           });
         }}>
         add_shopping_cart
-      </span>
+      </span> */}
     </ItemCardContainer>
   );
 }
 
 const ItemCardContainer = styled.div`
   position: relative;
-  width: 60%;
+  /* width: 50%; */
   margin: 1rem auto;
   padding: 0.7rem 0;
   transition: 0.1s ease;
   border-radius: 10px;
-  box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.2); */
 
   &:hover {
     transform: translateY(-3px);

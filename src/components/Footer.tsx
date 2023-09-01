@@ -32,13 +32,12 @@ export default function Footer() {
 }
 
 const FooterBox = styled.footer`
-  position: absolute;
-  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
   height: var(--footer-height);
+  margin-bottom: 2rem;
   padding: 0.5rem;
   background-color: var(--black);
   color: var(--white);

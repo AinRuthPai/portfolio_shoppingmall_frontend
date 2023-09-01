@@ -8,7 +8,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import MainImg from "../components/MainImg";
 
 export default function MainPage({ data }: any) {
   const todayItem = [];
@@ -20,6 +19,13 @@ export default function MainPage({ data }: any) {
       } else {
         i--;
       }
+    }
+  }
+
+  const newItem = [];
+  for (let x = 4; x > 0; x--) {
+    if (x > 0) {
+      newItem.push(data[data.length - x]);
     }
   }
 
@@ -70,10 +76,14 @@ export default function MainPage({ data }: any) {
         </Swiper>
       </SortingItemWrapper>
       <Menu>
-        <span>컬렉션</span>
+        <span>NEW PRODUCT</span>
         <span className='material-symbols-outlined'>arrow_forward_ios</span>
       </Menu>
-      <MainImg />
+      <NewItemContainer>
+        {newItem.map((data: any) => {
+          return <Item data={data} key={data.id} />;
+        })}
+      </NewItemContainer>
     </>
   );
 }
@@ -191,4 +201,10 @@ export const Menu = styled.div`
 export const LinkDefaultStyle = styled(Link)`
   text-decoration: none;
   color: blue;
+`;
+
+const NewItemContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 2rem;
 `;

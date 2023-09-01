@@ -61,8 +61,6 @@ body {
   text-align: center;
   font-family: 'Pretendard-Regular';
   animation: fadein 2s;
-  padding-bottom: var(--footer-height);
-
 
   /* -webkit-user-select: none;
   -moz-user-select: none;
