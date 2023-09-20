@@ -35,6 +35,10 @@ export default function Cart() {
     return;
   }
 
+  function deleteCheckItem() {
+    dispatch(removeItem(state.cart[checkedList]));
+  }
+
   function checkHandler(e: React.ChangeEvent<HTMLInputElement>, value: any) {
     setIsChecked(!isChecked);
     checkedItemHandler(value, e.target.checked);
@@ -92,7 +96,7 @@ export default function Cart() {
         <input type='checkbox' onChange={(e) => checkAllHandler(e)} checked={checkedList.length === state.cart.length ? true : false} />
 
         <span>전체 {state.cart.length}개</span>
-        <span>선택 삭제</span>
+        <span onClick={deleteCheckItem}>선택 삭제</span>
       </CartCheckWrapper>
 
       {state.cart.map((item: any, i: any) => {

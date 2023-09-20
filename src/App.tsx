@@ -62,6 +62,10 @@ body {
   font-family: 'Pretendard-Regular';
   animation: fadein 2s;
 
+  @media ( min-width: 768px ) {
+  width: 80%;
+  }
+
   /* -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

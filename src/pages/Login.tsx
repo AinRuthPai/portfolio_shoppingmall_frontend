@@ -65,7 +65,12 @@ export const FormContainer = styled.div`
   p {
     font-size: 1.2rem;
   }
+
+  @media (min-width: 768px) {
+    width: 70%;
+  }
 `;
+
 
 export const FormStyle = styled.form`
   display: flex;

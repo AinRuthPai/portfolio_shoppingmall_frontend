@@ -64,7 +64,7 @@ export default function ItemDetail({ data }: any) {
       <ItemDetailContent>
         <h4>상품 상세정보</h4>
         {findItem.img.map((data: any, i: any) => {
-          return <img src={data} alt=''></img>;
+          return <ItemDetailImg src={data} alt=''></ItemDetailImg>;
         })}
       </ItemDetailContent>
     </DetailContainer>
@@ -78,6 +78,11 @@ const DetailContainer = styled.div`
 
 const DetailItemBox = styled.div`
   width: 100%;
+
+  @media (min-width: 768px) {
+    width: 60%;
+    margin: 0 auto;
+  }
 
   > div {
     margin-top: 1rem;
@@ -125,16 +130,20 @@ const DetailItemBox = styled.div`
 `;
 
 const DetailImg = styled.img`
-  width: 14rem;
-  height: 16rem;
+  width: 90%;
   margin: 2rem auto 0;
   object-fit: contain;
+
+  @media (min-width:768px) {
+    width: 50%;
+  }
 `;
 
 const MobileDetailFooter = styled.nav`
   position: fixed;
   z-index: 95;
   bottom: 0;
+  left: 0;
   width: 100%;
   height: 5rem;
   background-color: var(--white);
@@ -155,6 +164,7 @@ const ItemDetailContent = styled.div`
 
   img {
     width: 80%;
+    margin: 0 auto;
     margin-top: 1.5rem;
   }
 `;
@@ -166,4 +176,15 @@ const CartBtn = styled(BtnTamplate)`
 
 const MenuLine = styled(Menu)`
   margin: 1rem auto 0;
+`;
+
+const ItemDetailImg = styled.img`
+width: 100%;
+
+@media (min-width: 768px) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50%;
+}
 `;

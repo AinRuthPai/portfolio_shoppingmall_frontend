@@ -102,7 +102,7 @@ const MainPageBanner = styled.div`
   color: var(--black);
   font-size: 2.5rem;
   background-image: url(${bannerImg});
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: 50%;
 
@@ -140,12 +140,13 @@ const MainPageBanner = styled.div`
     background-position: 10%;
   }
 
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
     height: calc(100vh - 4rem);
     margin-top: 4rem;
     background-position: 10%;
     font-size: 2rem;
+    background-size: cover;
 
     > span:first-child {
       margin-top: 3rem;
