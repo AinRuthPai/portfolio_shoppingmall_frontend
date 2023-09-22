@@ -36,7 +36,7 @@ export default function Cart() {
   }
 
   function deleteCheckItem() {
-    dispatch(removeItem(state.cart[checkedList]));
+    dispatch(removeItem(checkedList));
   }
 
   function checkHandler(e: React.ChangeEvent<HTMLInputElement>, value: any) {

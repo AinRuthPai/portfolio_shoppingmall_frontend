@@ -6,10 +6,28 @@ import { Navigation, Pagination } from "swiper";
 import "swiper/css"; //basic
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
 
 export default function MainPage({ data }: any) {
+  const [ref, inView] = useInView();
+
+  const fadeInRef = useRef<any>();
+  const scrollRef = useRef<any>(null);
+
+  function FadeIn() {
+    fadeInRef.current.style.transition = `opacity 1s 0.5s`; // duration delay
+    fadeInRef.current.style.opacity = 1;
+  }
+
+  useEffect(() => {
+    if (inView) {
+      console.log(inView);
+      FadeIn();
+    }
+  }, [inView]);
+
   const todayItem = [];
   for (let i = 0; i < 6; i++) {
     if (i >= 0) {
@@ -28,8 +46,6 @@ export default function MainPage({ data }: any) {
       newItem.push(data[data.length - x]);
     }
   }
-
-  const scrollRef = useRef<any>(null);
 
   function scrollToElement() {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
@@ -76,10 +92,10 @@ export default function MainPage({ data }: any) {
         </Swiper>
       </SortingItemWrapper>
       <Menu>
-        <span>NEW PRODUCT</span>
+        <span ref={ref}>NEW PRODUCT</span>
         <span className='material-symbols-outlined'>arrow_forward_ios</span>
       </Menu>
-      <NewItemContainer>
+      <NewItemContainer ref={fadeInRef}>
         {newItem.map((data: any) => {
           return <Item data={data} key={data.id} />;
         })}
@@ -208,4 +224,5 @@ const NewItemContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-bottom: 2rem;
+  opacity: 0;
 `;
