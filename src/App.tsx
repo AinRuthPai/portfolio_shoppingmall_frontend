@@ -1,37 +1,38 @@
-import { createGlobalStyle } from "styled-components";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Data } from "./db/Data";
-import MainPage from "./pages/MainPage";
-import Header from "./components/Header";
-import Cart from "./pages/Cart";
-import ItemDetail from "./pages/ItemDetail";
-import Login from "./pages/Login";
-import ItemAll from "./pages/ItemAll";
-import NotFound from "./pages/NotFound";
-import Footer from "./components/Footer";
-import ScrollToTop from "./ScrollToTop";
-import SignUp from "./pages/SignUp";
+import { createGlobalStyle } from 'styled-components';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Data } from './db/Data';
+import MainPage from './pages/MainPage';
+import Header from './components/Header';
+import Cart from './pages/Cart';
+import ItemDetail from './pages/ItemDetail';
+import Login from './pages/Login';
+import ItemAll from './pages/ItemAll';
+import NotFound from './pages/NotFound';
+import Footer from './components/Footer';
+import ScrollToTop from './ScrollToTop';
+import SignUp from './pages/SignUp';
 
 export default function App() {
-  const data = Data;
+    let data = Data;
+    console.log(data);
 
-  return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <GlobalStyle />
-      <Header />
-      <Routes>
-        <Route path='/shoeshop' element={<MainPage data={data} />} />
-        <Route path='/shoeshop/itemall' element={<ItemAll data={data} />} />
-        <Route path='/shoeshop/detail/:id' element={<ItemDetail data={data} />} />
-        <Route path='/shoeshop/cart' element={<Cart />} />
-        <Route path='/shoeshop/login' element={<Login />} />
-        <Route path='/shoeshop/signup' element={<SignUp />} />
-        <Route path='/shoeshop/*' element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <ScrollToTop />
+            <GlobalStyle />
+            <Header />
+            <Routes>
+                <Route path='/shoeshop' element={<MainPage data={data} />} />
+                <Route path='/shoeshop/itemall' element={<ItemAll data={data} />} />
+                <Route path='/shoeshop/detail/:id' element={<ItemDetail data={data} />} />
+                <Route path='/shoeshop/cart' element={<Cart />} />
+                <Route path='/shoeshop/login' element={<Login />} />
+                <Route path='/shoeshop/signup' element={<SignUp />} />
+                <Route path='/shoeshop/*' element={<NotFound />} />
+            </Routes>
+            <Footer />
+        </BrowserRouter>
+    );
 }
 
 const GlobalStyle = createGlobalStyle`
