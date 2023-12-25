@@ -1,6 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Data } from './db/Data';
 import MainPage from './pages/MainPage';
 import Header from './components/Header';
 import Cart from './pages/Cart';
@@ -9,18 +7,31 @@ import Login from './pages/Login';
 import ItemAll from './pages/ItemAll';
 import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
-import ScrollToTop from './ScrollToTop';
+import ScrollToTop from './Hooks/ScrollToTop';
 import SignUp from './pages/SignUp';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { ItemType } from './types';
+import { GlobalStyle, Margin } from './App.style';
 
 export default function App() {
-    let data = Data;
-    console.log(data);
+    const [data, setData] = useState<ItemType[]>([]);
+
+    useEffect(() => {
+        axios
+            .get('https://ainruthpai.github.io/imgSrc/shoeshop/item/Data.json')
+            .then((res) => {
+                setData(res.data);
+            })
+            .catch((error) => console.log(error));
+    }, []);
 
     return (
         <BrowserRouter>
             <ScrollToTop />
             <GlobalStyle />
             <Header />
+            <Margin />
             <Routes>
                 <Route path='/shoeshop' element={<MainPage data={data} />} />
                 <Route path='/shoeshop/itemall' element={<ItemAll data={data} />} />
@@ -34,58 +45,3 @@ export default function App() {
         </BrowserRouter>
     );
 }
-
-const GlobalStyle = createGlobalStyle`
-
-:root {
-  /* size */
-  --footer-height: 10rem;
-  --nav-height: 4rem;
-  
-  /* color */
-  --white: #fff;
-  --black: #3d3d3d;
-  --gray: #f4f4f4;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-}
-
-body {
-  position: relative;
-  width: 100%;
-  margin: 0 auto ;
-  text-align: center;
-  font-family: 'Pretendard-Regular';
-  animation: fadein 2s;
-
-  @media ( min-width: 768px ) {
-  width: 80%;
-  }
-
-  /* -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; */
-
-  @font-face {
-      font-family: 'Pretendard-Regular';
-      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
-  }
-  
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-}
-`;

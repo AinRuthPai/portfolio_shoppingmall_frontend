@@ -1,35 +1,25 @@
-import styled from 'styled-components';
-// import bannerImg from '../img/main_img.jpg';
+import React, { useEffect } from 'react';
 import Item from '../components/ItemCard';
-import { Swiper, SwiperSlide } from 'swiper/react'; // basic
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper';
-import 'swiper/css'; //basic
+import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useRef } from 'react';
+import { ItemType, Props } from '../types';
+import { MainPageBanner, SortingItemWrapper, Menu, NewItemContainer } from './style/MainPage.style';
 import { useInView } from 'react-intersection-observer';
-import { Props } from '../db/Data';
 
 export default function MainPage({ data }: Props) {
-    const [ref, inView] = useInView();
+    const scrollRef = useRef<HTMLInputElement>(null);
+    const todayItem: ItemType[] = [];
+    const newItem: ItemType[] = [];
+    const [ref, inView] = useInView({
+        triggerOnce: true,
+        rootMargin: '-30px 0px',
+    });
 
-    const fadeInRef = useRef<any>();
-    const scrollRef = useRef<any>(null);
-
-    function FadeIn() {
-        fadeInRef.current.style.transition = `opacity 1s 0.5s`; // duration delay
-        fadeInRef.current.style.opacity = 1;
-    }
-
-    useEffect(() => {
-        if (inView) {
-            console.log(inView);
-            FadeIn();
-        }
-    }, [inView]);
-
-    const todayItem = [];
+    // 랜딩 페이지의 오늘의 아이템을 랜덤하게 6가지 출력
     if (data.length >= 6) {
         for (let i = 0; i < 6; i++) {
             if (i >= 0) {
@@ -43,7 +33,7 @@ export default function MainPage({ data }: Props) {
         }
     }
 
-    const newItem = [];
+    // 랜딩 페이지의 새로운 아이템을 출력, 가장 마지막에 추가된 4가지 신상품을 보여준다.
     if (data.length >= 4) {
         for (let x = 4; x > 0; x--) {
             if (x > 0) {
@@ -53,7 +43,7 @@ export default function MainPage({ data }: Props) {
     }
 
     function scrollToElement() {
-        scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+        if (scrollRef.current !== null) scrollRef.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     return (
@@ -79,15 +69,15 @@ export default function MainPage({ data }: Props) {
                     navigation
                     breakpoints={{
                         768: {
-                            slidesPerView: 2, //브라우저가 768보다 클 때
+                            slidesPerView: 2,
                             spaceBetween: 20,
                         },
                         1360: {
-                            slidesPerView: 4, //브라우저가 1024보다 클 때
+                            slidesPerView: 4,
                             spaceBetween: 20,
                         },
                     }}>
-                    {todayItem.map((data) => {
+                    {todayItem.map((data: ItemType) => {
                         return (
                             <SwiperSlide>
                                 <Item data={data} key={data.id} />
@@ -96,138 +86,19 @@ export default function MainPage({ data }: Props) {
                     })}
                 </Swiper>
             </SortingItemWrapper>
+
             <Menu>
-                <span ref={ref}>NEW PRODUCT</span>
+                <span>NEW PRODUCT</span>
                 <span className='material-symbols-outlined'>arrow_forward_ios</span>
             </Menu>
-            <NewItemContainer ref={fadeInRef}>
-                {newItem.map((data) => {
-                    return <Item data={data} key={data.id} />;
-                })}
-            </NewItemContainer>
+
+            <div>
+                <NewItemContainer ref={ref} className={`${inView ? 'opacity' : ''}`}>
+                    {newItem.map((data: ItemType) => {
+                        return <Item data={data} key={data.id} />;
+                    })}
+                </NewItemContainer>
+            </div>
         </>
     );
 }
-
-const MainPageBanner = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    width: 80%;
-    height: calc(100vh - 4rem);
-
-    /* height: 90vh; */
-    margin: 5rem auto 0;
-    padding-bottom: 16px;
-    color: var(--black);
-    font-size: 2.5rem;
-    /* background-image: url();
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: 50%; */
-
-    @keyframes fadeInDown {
-        0% {
-            opacity: 0;
-            transform: translate3d(0, -100%, 0);
-        }
-        to {
-            opacity: 1;
-            transform: translateZ(0);
-        }
-    }
-
-    > span:first-child {
-        margin-top: 4rem;
-        margin-left: 10%;
-        animation: fadeInDown 1s;
-    }
-    > span:nth-child(2) {
-        margin-left: 15%;
-        animation: fadeInDown 2s;
-    }
-    > span:nth-child(3) {
-        margin-left: 20%;
-        animation: fadeInDown 3s;
-    }
-    > span:last-child {
-        font-size: 3rem;
-        margin: 4rem auto 0;
-        cursor: pointer;
-    }
-
-    @media screen and (max-width: 1024px) {
-        background-position: 10%;
-    }
-
-    @media screen and (max-width: 768px) {
-        width: 100%;
-        height: calc(100vh - 4rem);
-        margin-top: 4rem;
-        background-position: 10%;
-        font-size: 2rem;
-        background-size: cover;
-
-        > span:first-child {
-            margin-top: 3rem;
-        }
-    }
-`;
-
-export const SortingItemWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-
-    .swiper-wrapper,
-    .swiper-slide {
-        width: 350px;
-
-        @media screen and (min-width: 768px) {
-            width: 650px;
-        }
-
-        @media screen and (min-width: 1024px) {
-            width: 1350px;
-        }
-    }
-
-    @media screen and (max-width: 700px) {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-`;
-
-export const Menu = styled.div`
-    position: relative;
-    width: 80%;
-    margin: 3rem auto;
-    padding: 6px 16px;
-    font-size: 24px;
-    border-bottom: 2px solid var(--black);
-    text-align: left;
-
-    > span:last-child {
-        position: absolute;
-        right: 0;
-    }
-
-    @media screen and (max-width: 700px) {
-        font-size: 18px;
-    }
-`;
-
-export const LinkDefaultStyle = styled(Link)`
-    text-decoration: none;
-    color: blue;
-`;
-
-const NewItemContainer = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-bottom: 2rem;
-    opacity: 0;
-`;
